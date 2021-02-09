@@ -23,4 +23,7 @@ public:
 	int rank() {
 		return this->rank;
 	}
+	friend bool operator==(const Player &lplayer, const Player &rplayer) {
+		return lplayer.id() == rplayer.id();
+	}
 };
