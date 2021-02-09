@@ -123,6 +123,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GameManager.hpp" />
+    <ClInclude Include="Hero.hpp" />
+    <ClInclude Include="HeroManager.hpp" />
+    <ClInclude Include="Player.hpp" />
+    <ClInclude Include="PlayerManager.hpp" />
+    <ClInclude Include="Session.hpp" />
+    <ClInclude Include="Team.hpp" />
+    <ClInclude Include="TeamManager.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

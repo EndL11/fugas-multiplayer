@@ -11,9 +11,7 @@ public:
 	Hero(int t_id, std::string t_name, int t_hp, int t_damage)
 		: m_id(t_id), m_name(t_name), m_hp(t_hp), m_damage(t_damage)
 	{};
-	~Hero() {
-		std::cout << "Hero with id: " << m_id << " and name: " << m_name << " deleted" << std::endl;
-	};
+	~Hero() {};
 	int hp() {
 		return this->m_hp;
 	}
