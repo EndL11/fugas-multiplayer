@@ -64,10 +64,7 @@ public:
 	void Rating(const std::array<ReadyPlayer, 5> &t_team, const std::function<void(Player&)>& t_ratingEvent) {
 		for (auto ready_player : t_team) {
 			Player& tmp_player = GetPlayerById(ready_player.player().id());
-
-			std::cout << "Before " << tmp_player.name() << " rank: " << tmp_player.rank() << std::endl;
 			t_ratingEvent(tmp_player);
-			std::cout << "After " << tmp_player.name() << " rank: " << tmp_player.rank() << "\n" << std::endl;
 		}
 	}
 
