@@ -12,10 +12,10 @@ public:
 	GameManager(PlayerManager &t_pm): m_pm(t_pm) {};
 	~GameManager() {};
 
-	void PerformGameSession(std::list<Player> &t_players, std::list<Hero> &t_heroes) {
+	void PerformGameSession( std::list<Hero> &t_heroes) {
 		int rate = 25;
 		TeamManager team_manager;
-		std::list<Player> players = t_players;
+		std::list<Player> players = m_pm.players();
 		std::list<Hero> heroes = t_heroes;
 		//	generating teams
 		Team team_one = team_manager.GenerateNewTeam(players, heroes);

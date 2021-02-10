@@ -33,7 +33,7 @@ int main() {
 	char answr;
 
 	do {
-		gm.PerformGameSession(pm.players(), hm.heroes());
+		gm.PerformGameSession(hm.heroes());
 		std::cout << "Session ended --------------------------------------\n\n";
 		std::cout << "Want play again? (y/n)\n>: ";
 		std::cin >> answr;
