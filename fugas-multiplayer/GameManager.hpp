@@ -2,12 +2,14 @@
 #include "Session.hpp"
 #include "TeamManager.hpp"
 #include "Hero.hpp"
-#include "Player.hpp"
+#include "PlayerManager.hpp"
 
 class GameManager {
 	std::list<Session> m_game_sessions;
+	PlayerManager m_pm;
 public:
 	GameManager() {};
+	GameManager(PlayerManager &t_pm): m_pm(t_pm) {};
 	~GameManager() {};
 
 	void PerformGameSession(std::list<Player> &t_players, std::list<Hero> &t_heroes) {
@@ -28,7 +30,8 @@ public:
 		//	saving session
 		m_game_sessions.push_back(session);
 		//	changing players rank
-		session.GetWinnerTeam().Rating([rate](Player &t_player) {t_player.plusRank(rate); });
-		session.GetLoserTeam().Rating([rate](Player &t_player) {t_player.minusRank(rate); });
+
+		m_pm.Rating(session.GetWinnerTeam().team(), [rate](Player &t_player) -> Player {return t_player.plusRank(rate); });
+		m_pm.Rating(session.GetLoserTeam().team(), [rate](Player &t_player) -> Player {return t_player.minusRank(rate); });
 	};
 };

@@ -1,10 +1,14 @@
 #pragma once
-#include "Player.hpp"
 #include <list>
+#include "Player.hpp"
+#include "Team.hpp"
 class PlayerManager {
 	std::list<Player> m_players;
 public:
 	PlayerManager() {};
+	PlayerManager(PlayerManager &t_pm) {
+		this->m_players = t_pm.m_players;
+	};
 	~PlayerManager() {};
 	Player CreatePlayer(int t_id, std::string t_name, int t_rank) {
 		Player new_player(t_id, t_name, t_rank);
@@ -26,14 +30,14 @@ public:
 	}
 	Player GetPlayerById(int t_id) {
 		try {
-			for (auto player : m_players) {
+			for (auto player : this->m_players) {
 				if (player.id() == t_id) {
 					return player;
 				}
 			}
-			throw "Player not found";
+			throw 1;
 		}
-		catch (std::string e) {
+		catch (int e) {
 			std::cout << "Error: " << e << std::endl;
 		}
 	}
@@ -56,6 +60,20 @@ public:
 	void ShowPlayerInfo(Player &t_player) {
 		t_player.showInfo();
 	};
+
+
+	void Rating(const std::array<ReadyPlayer, 5> &t_team, const std::function<Player(Player&)>& t_ratingEvent) {
+		for (auto ready_player : t_team) {
+			std::cout << ready_player.player().id();
+			ready_player.player().showInfo();
+
+			Player tmp_player = GetPlayerById(ready_player.player().id());
+
+			std::cout << "Before " << tmp_player.name() << " rank: " << tmp_player.rank() << std::endl;
+			tmp_player = t_ratingEvent(tmp_player);
+			std::cout << "After " << tmp_player.name() << " rank: " << tmp_player.rank() << "\n" << std::endl;
+		}
+	}
 
 	std::list<Player>& players() { return this->m_players; }
 };

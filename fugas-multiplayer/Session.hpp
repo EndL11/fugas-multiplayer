@@ -29,7 +29,7 @@ public:
 		}
 		showWinnerMessage();
 	}
-	Team GetLoserTeam() {
+	Team& GetLoserTeam() {
 		if (m_winner == 1) {
 			return m_team_two;
 		}
@@ -38,10 +38,10 @@ public:
 		}
 		std::cout << "Draw!" << std::endl;
 		int rand_team = rand() % 3 + 1;
-		m_winner = rand_team;
-		return rand_team == 1 ? m_team_two : m_team_one;
+		this->m_winner = rand_team;
+		return (rand_team == 1 ? m_team_two : m_team_one);
 	}
-	Team GetWinnerTeam() {
+	Team& GetWinnerTeam() {
 		if (m_winner == 1) {
 			return m_team_one;
 		}
@@ -50,9 +50,9 @@ public:
 		}
 		std::cout << "Draw!" << std::endl;
 		int rand_team = rand() % 3 + 1;
-		m_winner = rand_team;
+		this->m_winner = rand_team;
 		showWinnerMessage();
-		return rand_team == 2 ? m_team_two : m_team_one;
+		return (rand_team == 2 ? m_team_two : m_team_one);
 	}
 
 	void showWinnerMessage() {
