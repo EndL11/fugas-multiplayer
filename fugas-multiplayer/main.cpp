@@ -4,13 +4,17 @@
 
 int main() {
 	srand(time(NULL));
-	int players_count, heroes_count;
+	int players_count = 0, heroes_count = 0;
 	PlayerManager pm;
 	HeroManager hm;
-	std::cout << "Enter count of players: ";
-	std::cin >> players_count;
-	std::cout << "Enter count of heroes: ";
-	std::cin >> heroes_count;
+	while (players_count < 10) {
+		std::cout << "Enter count of players: ";
+		std::cin >> players_count;
+	}
+	while (heroes_count < 10) {
+		std::cout << "Enter count of heroes: ";
+		std::cin >> heroes_count;
+	}
 	for (int i = 0; i < players_count; i++) {
 		int random_rank = rand() % 100 + 26;
 		std::string name = "Player_" + std::to_string(i + 1);
