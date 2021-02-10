@@ -1,7 +1,5 @@
 #pragma once
 #include <list>
-#include <stdlib.h>
-#include <time.h>
 #include "Team.hpp"
 
 template<typename T>
@@ -28,22 +26,49 @@ public:
 		return new_team;
 	}
 	Team GenerateNewTeam(std::list<Player> &t_players, std::list<Hero> &t_heroes) {
-		srand(time(NULL));
+		std::array<int, 5> players_ids;
+		std::array<int, 5> heroes_ids;
+		players_ids.fill(-1);
+		heroes_ids.fill(-1);
 
 		std::string team_name;
 		std::array<ReadyPlayer, 5> team;
-		for (int i = 0; i < 5; i++) {
+
+		for (int i = 0; i < 5;) {
 			int playerIndex = rand() % t_players.size();
-			int heroIndex = rand() % t_heroes.size();
-
-			std::cout << "Player index: " << playerIndex << "\n";
-			std::cout << "Hero index: " << heroIndex << "\n\n";
-
 			Player player = GetElementFromListByIndex<Player>(t_players, playerIndex);
-			Hero hero = GetElementFromListByIndex<Hero>(t_heroes, heroIndex);
 
+			bool already_added = false;
+			do {
+				for (auto id : players_ids) {
+					if (id == player.id()) {
+						already_added = true;
+						break;
+					}
+				}
+				playerIndex = rand() % t_players.size();
+			} while (already_added);
+
+			already_added = false;
+			int heroIndex = rand() % t_heroes.size();
+			Hero hero = GetElementFromListByIndex<Hero>(t_heroes, heroIndex);
+			do {
+				for (auto id : heroes_ids) {
+					if (id == hero.id()) {
+						already_added = true;
+						break;
+					}
+				}
+				heroIndex = rand() % t_heroes.size();
+			} while (already_added);			
+
+			t_players.remove(player);
+			t_heroes.remove(hero);
 			ReadyPlayer ready_player(player, hero);
 			team[i] = ready_player;
+			players_ids[i] = player.id();
+			heroes_ids[i] = hero.id();
+			i++;
 		}
 		std::cout << "Enter team name: ";
 		std::cin >> team_name;
