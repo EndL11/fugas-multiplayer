@@ -13,21 +13,15 @@ int main() {
 	std::cin >> heroes_count;
 	for (int i = 0; i < players_count; i++) {
 		int random_rank = rand() % 100 + 26;
-		std::string name = "";
-		std::cout << "Enter player name: ";
-		std::cin >> name;
+		std::string name = "Player_" + std::to_string(i + 1);
 		pm.CreatePlayer(i, name, random_rank);
 	}
-	std::cout << "\n\n";
 	for (int i = 0; i < heroes_count; i++) {
 		int random_hp = rand() % 100 + 30;
 		int random_damage = rand() % 100 + 26;
-		std::string name = "";
-		std::cout << "Enter hero name: ";
-		std::cin >> name;
+		std::string name = "Hero_" + std::to_string(i + 1);
 		hm.CreateHero(i, name, random_hp, random_damage);
 	}
-	std::cout << "\n\n";
 	GameManager gm(pm);
 	char answr;
 	do {
