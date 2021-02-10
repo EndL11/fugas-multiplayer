@@ -28,9 +28,9 @@ public:
 			std::cout << "Error: " << e << std::endl;
 		}
 	}
-	Player GetPlayerById(int t_id) {
+	Player& GetPlayerById(int t_id) {
 		try {
-			for (auto player : this->m_players) {
+			for (auto &player : this->m_players) {
 				if (player.id() == t_id) {
 					return player;
 				}
@@ -61,16 +61,12 @@ public:
 		t_player.showInfo();
 	};
 
-
-	void Rating(const std::array<ReadyPlayer, 5> &t_team, const std::function<Player(Player&)>& t_ratingEvent) {
+	void Rating(const std::array<ReadyPlayer, 5> &t_team, const std::function<void(Player&)>& t_ratingEvent) {
 		for (auto ready_player : t_team) {
-			std::cout << ready_player.player().id();
-			ready_player.player().showInfo();
-
-			Player tmp_player = GetPlayerById(ready_player.player().id());
+			Player& tmp_player = GetPlayerById(ready_player.player().id());
 
 			std::cout << "Before " << tmp_player.name() << " rank: " << tmp_player.rank() << std::endl;
-			tmp_player = t_ratingEvent(tmp_player);
+			t_ratingEvent(tmp_player);
 			std::cout << "After " << tmp_player.name() << " rank: " << tmp_player.rank() << "\n" << std::endl;
 		}
 	}

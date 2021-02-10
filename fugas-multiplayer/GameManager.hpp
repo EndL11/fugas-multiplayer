@@ -30,8 +30,7 @@ public:
 		//	saving session
 		m_game_sessions.push_back(session);
 		//	changing players rank
-
-		m_pm.Rating(session.GetWinnerTeam().team(), [rate](Player &t_player) -> Player {return t_player.plusRank(rate); });
-		m_pm.Rating(session.GetLoserTeam().team(), [rate](Player &t_player) -> Player {return t_player.minusRank(rate); });
+		m_pm.Rating(session.GetWinnerTeam().team(), [rate](Player &t_player) {t_player.plusRank(rate); });
+		m_pm.Rating(session.GetLoserTeam().team(), [rate](Player &t_player) {t_player.minusRank(rate); });
 	};
 };
