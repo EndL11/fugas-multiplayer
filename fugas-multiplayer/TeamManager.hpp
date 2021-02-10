@@ -20,7 +20,7 @@ public:
 	~TeamManager() {
 		std::cout << "Team manager removed" << std::endl;
 	};
-	Team GenerateNewTeam(std::string t_name, std::array<ReadyPlayer, 5> t_team) {
+	Team GenerateNewTeam(std::string t_name, std::array<std::tuple<Player, Hero>, 5> t_team) {
 		Team new_team(t_name, t_team);
 		m_teams.push_back(new_team);
 		return new_team;
@@ -32,7 +32,7 @@ public:
 		heroes_ids.fill(-1);
 
 		std::string team_name;
-		std::array<ReadyPlayer, 5> team;
+		std::array<std::tuple<Player, Hero>, 5> team;
 
 		for (int i = 0; i < 5;) {
 			int playerIndex = rand() % t_players.size();
@@ -64,7 +64,7 @@ public:
 
 			t_players.remove(player);
 			t_heroes.remove(hero);
-			ReadyPlayer ready_player(player, hero);
+			std::tuple<Player, Hero> ready_player = std::make_tuple(player, hero);
 			team[i] = ready_player;
 			players_ids[i] = player.id();
 			heroes_ids[i] = hero.id();
@@ -80,7 +80,8 @@ public:
 		std::cout << "Team " << t_team.name() << std::endl;
 		std::cout << "Member list:" << std::endl;
 		for (auto ready_player : t_team.team()) {
-			ready_player.showInfo();
+			std::get<0>(ready_player).showInfo();
+			std::get<1>(ready_player).showInfo();
 		}
 	}
 	void GetTeamInfo(std::string &t_name) {
@@ -89,7 +90,8 @@ public:
 				std::cout << "Team " << team.name() << std::endl;
 				std::cout << "Member list:" << std::endl;
 				for (auto ready_player : team.team()) {
-					ready_player.showInfo();
+					std::get<0>(ready_player).showInfo();
+					std::get<1>(ready_player).showInfo();
 				}
 			}
 		}

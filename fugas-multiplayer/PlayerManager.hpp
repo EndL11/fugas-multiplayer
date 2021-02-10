@@ -61,10 +61,10 @@ public:
 		t_player.showInfo();
 	};
 
-	void Rating(const std::array<ReadyPlayer, 5> &t_team, const std::function<void(Player&)>& t_ratingEvent) {
+	void Rating(const std::array<std::tuple<Player, Hero>, 5> &t_team, const std::function<void(Player&)>& t_ratingEvent) {
 		for (auto ready_player : t_team) {
-			Player& tmp_player = GetPlayerById(ready_player.player().id());
-			t_ratingEvent(tmp_player);
+			Player& tmp = GetPlayerById(std::get<0>(ready_player).id());
+			t_ratingEvent(tmp);
 		}
 	}
 
