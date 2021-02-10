@@ -7,7 +7,6 @@ int main() {
 	int players_count, heroes_count;
 	PlayerManager pm;
 	HeroManager hm;
-	GameManager gm;
 	std::cout << "Enter count of players: ";
 	std::cin >> players_count;
 	std::cout << "Enter count of heroes: ";
@@ -29,6 +28,7 @@ int main() {
 		hm.CreateHero(i, name, random_hp, random_damage);
 	}
 	std::cout << "\n\n";
+	GameManager gm(pm);
 	char answr;
 	do {
 		gm.PerformGameSession(pm.players(), hm.heroes());
