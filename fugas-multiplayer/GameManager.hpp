@@ -15,7 +15,7 @@ public:
 	void PerformGameSession( std::list<Hero> &t_heroes) {
 		int rate = 25;
 		TeamManager team_manager;
-		std::list<Player> players = m_pm.players();
+		std::list<Player> players = m_pm.list();
 		std::list<Hero> heroes = t_heroes;
 		//	generating teams
 		Team team_one = team_manager.GenerateNewTeam(players, heroes);
