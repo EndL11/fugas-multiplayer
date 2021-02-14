@@ -1,17 +1,7 @@
 #pragma once
 #include <list>
+#include <vector>
 #include "Team.hpp"
-
-template<typename T>
-T GetElementFromListByIndex(std::list<T> &list, int t_index) {
-	int i = 0;
-	for (T element : list) {
-		if (i == t_index) {
-			return element;
-		}
-		i++;
-	}
-}
 
 class TeamManager {
 	std::list<Team> m_teams;
@@ -25,49 +15,20 @@ public:
 		m_teams.push_back(new_team);
 		return new_team;
 	}
-	Team GenerateNewTeam(std::list<Player> &t_players, std::list<Hero> &t_heroes) {
-		std::array<int, 5> players_ids;
-		std::array<int, 5> heroes_ids;
-		players_ids.fill(-1);
-		heroes_ids.fill(-1);
-
+	Team GenerateNewTeam(std::vector<Player> &t_players, std::vector<Hero> &t_heroes) {
 		std::string team_name;
 		std::array<std::tuple<Player, Hero>, 5> team;
 
 		for (int i = 0; i < 5;) {
-			int playerIndex = rand() % t_players.size();
-			Player player = GetElementFromListByIndex<Player>(t_players, playerIndex);
+			int randomPlayerIndex = rand() % t_players.size();
+			int randomHeroIndex = rand() % t_heroes.size();
 
-			bool already_added = false;
-			do {
-				for (auto id : players_ids) {
-					if (id == player.id()) {
-						already_added = true;
-						break;
-					}
-				}
-				playerIndex = rand() % t_players.size();
-			} while (already_added);
+			std::tuple<Player, Hero> ready_player = std::make_tuple(t_players[randomPlayerIndex], t_heroes[randomHeroIndex]);
 
-			already_added = false;
-			int heroIndex = rand() % t_heroes.size();
-			Hero hero = GetElementFromListByIndex<Hero>(t_heroes, heroIndex);
-			do {
-				for (auto id : heroes_ids) {
-					if (id == hero.id()) {
-						already_added = true;
-						break;
-					}
-				}
-				heroIndex = rand() % t_heroes.size();
-			} while (already_added);			
+			t_players.erase(t_players.begin() + randomPlayerIndex, t_players.begin() + randomPlayerIndex + 1);
+			t_heroes.erase(t_heroes.begin() + randomHeroIndex, t_heroes.begin() + randomHeroIndex + 1);
 
-			t_players.remove(player);
-			t_heroes.remove(hero);
-			std::tuple<Player, Hero> ready_player = std::make_tuple(player, hero);
 			team[i] = ready_player;
-			players_ids[i] = player.id();
-			heroes_ids[i] = hero.id();
 			i++;
 		}
 		std::cout << "Enter team name: ";
